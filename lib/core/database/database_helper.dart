@@ -32,10 +32,28 @@ class DatabaseHelper {
         Password TEXT NOT NULL
       )
     ''');
+    await db.execute('''
+      CREATE TABLE Words (
+        WordID INTEGER PRIMARY KEY AUTOINCREMENT,
+        EngWordName TEXT NOT NULL,
+        TurWordName TEXT NOT NULL,
+        Picture TEXT
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE WordSamples (
+       WordSamplesID INTEGER PRIMARY KEY AUTOINCREMENT,
+       WordID INTEGER NOT NULL,
+       Samples TEXT NOT NULL,
+       FOREIGN KEY (WordID) REFERENCES Words (WordID)
+      )
+    ''');
   }
 
   Future<void> close() async {
     final db = await instance.database;
     db.close();
   }
+
+  
 }

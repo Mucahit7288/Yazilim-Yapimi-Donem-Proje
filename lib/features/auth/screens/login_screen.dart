@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,8 +16,8 @@ class _LoginScreenState extends State<LoginScreen>{
 
 Future<void> login() async {
   final user = await authService.login(
-      userNameController.text,
-      passwordController.text,
+      userNameController.text.trim(),
+      passwordController.text.trim(),
     );
     if (user != null){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +60,16 @@ Future<void> login() async {
               ElevatedButton(
                 onPressed: login,
                 child: const Text('Giriş Yap'),
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                );
+              },
+              child: const Text('Hesabınız yok mu? Kayıt Ol'),
             ),
           ],
         ),
